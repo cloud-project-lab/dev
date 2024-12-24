@@ -65,14 +65,14 @@ class Program
 
     const uint INPUT_KEYBOARD = 1;
     const uint KEYEVENTF_KEYUP = 0x0002;
-    const ushort VK_CONTROL = 0x11; // Virtual-key code for the "Control" key
+    const ushort VK_ESCAPE = 0x1B; // Virtual-key code for "ESC"
 
     [DllImport("user32.dll", SetLastError = true)]
     static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Mouse mover e envio da tecla CONTROL iniciado!");
+        Console.WriteLine("Mouse mover e envio da tecla ESC iniciado!");
         Console.WriteLine("Pressione 'Ctrl + C' para sair.");
 
         int moveDistance = 10; // Distância de movimento do mouse
@@ -92,9 +92,9 @@ class Program
                 SetCursorPos(newX, newY);
                 Console.WriteLine($"Mouse movido para: ({newX}, {newY})");
 
-                // Enviar a tecla CONTROL
-                SendControlKey();
-                Console.WriteLine("Tecla CONTROL enviada.");
+                // Enviar a tecla ESC
+                SendEscapeKey();
+                Console.WriteLine("Tecla ESC enviada.");
             }
             else
             {
@@ -105,12 +105,12 @@ class Program
         }
     }
 
-    static void SendControlKey()
+    static void SendEscapeKey()
     {
-        // Criar um array para pressionar e soltar a tecla CONTROL
+        // Criar um array para pressionar e soltar a tecla ESC
         INPUT[] inputs = new INPUT[2];
 
-        // Pressionar CONTROL
+        // Pressionar ESC
         inputs[0] = new INPUT
         {
             type = INPUT_KEYBOARD,
@@ -118,7 +118,7 @@ class Program
             {
                 ki = new KEYBDINPUT
                 {
-                    wVk = VK_CONTROL,
+                    wVk = VK_ESCAPE,
                     wScan = 0,
                     dwFlags = 0,
                     time = 0,
@@ -127,7 +127,7 @@ class Program
             }
         };
 
-        // Soltar CONTROL
+        // Soltar ESC
         inputs[1] = new INPUT
         {
             type = INPUT_KEYBOARD,
@@ -135,7 +135,7 @@ class Program
             {
                 ki = new KEYBDINPUT
                 {
-                    wVk = VK_CONTROL,
+                    wVk = VK_ESCAPE,
                     wScan = 0,
                     dwFlags = KEYEVENTF_KEYUP,
                     time = 0,
@@ -149,7 +149,7 @@ class Program
 
         if (result == 0)
         {
-            Console.WriteLine("Falha ao enviar a tecla CONTROL.");
+            Console.WriteLine("Falha ao enviar a tecla ESC.");
         }
     }
 }
